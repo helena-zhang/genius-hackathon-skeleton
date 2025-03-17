@@ -1,20 +1,44 @@
-<h1 align="center">Agentic Coding - Project Template</h1>
 
-<p align="center">
-  <a href="https://github.com/The-Pocket/PocketFlow" target="_blank">
-    <img 
-      src="./assets/banner.png" width="600"
-    />
-  </a>
-</p>
+# Image to Todo List Converter
 
-    
-This is a project template for Agentic Coding with [Pocket Flow](https://github.com/The-Pocket/PocketFlow), a 100-line LLM framework, and Cursor.
+This program extracts events, reminders, and todo items from images using OCR (Optical Character Recognition). It automatically classifies text into different categories and presents them in a friendly, organized format.
 
-- We have included the [.cursorrules](.cursorrules) file to let Cursor AI help you build LLM projects.
-  
-- Want to learn how to build LLM projects with Agentic Coding?
-  
-  - Check out the [Agentic Coding Guidance](https://the-pocket.github.io/PocketFlow/guide.html)
-    
-  - Check out the [YouTube Tutorial](https://www.youtube.com/@ZacharyLLM?sub_confirmation=1)
+## Features
+- Extract text from images using OCR
+- Automatically classify items as events, reminders, or todos
+- Smart detection of dates, times, and keywords
+- Friendly output formatting with emojis
+- Helpful error messages and motivational feedback
+
+## Requirements
+- Python 3.x
+- Tesseract OCR
+- Python packages (install via `pip install -r requirements.txt`):
+  - pytesseract
+  - Pillow
+
+## Installation
+1. Install Tesseract OCR:
+   ```bash
+   brew install tesseract
+   ```
+2. Install Python dependencies:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+## Usage
+```python
+from image_to_todo import main
+
+# Process an image
+main('path_to_your_image.jpg')
+```
+
+The program will analyze the image and output:
+- 📅 Events (meetings, appointments, etc.)
+- ⏰ Reminders
+- ✓ Todo Items
+
