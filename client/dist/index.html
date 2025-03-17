@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Genius Feed</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <style>
+    body,
+    html {
+      padding: 0px;
+      margin: 0px;
+      height: 100%;
+      width: 100%;
+    }
+    #pg-app-wrapper {
+      margin: auto;
+      height: 100%;
+      width: 100%;
+      max-width: 920px;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="pg-app-wrapper"></div>
+  </body>
+  <script src="facet-chat.js"></script>
+  <script>
+    const project_name = '######';  // Replace with your hackathon project identifier
+    const serverURL = 'https://app.productgenius.io';  // Replace with your hackathon server URL
+    const access_token = '######';  // Replace with your hackathon access token
+
+    const defaultDesignSettings = {
+      merchant: '',
+      grid: {
+        enabled: true,
+        mobile: {
+          columns: 1,
+        },
+        desktop: {
+          columns: 2,
+        },
+      },
+    };
+    const settings = fetch(`${serverURL}/shopify/api/frontend_config/${project_name}`)
+    .then(response => response.json())
+    .then(data => {
+      const designSettings = data?.design.style || defaultDesignSettings;
+      delete designSettings['global'];
+      GAMALON.init({
+      container: '#pg-app-wrapper',
+      organizationId: project_name,  
+      access_token: access_token, 
+      serverURL: serverURL,
+      serverBehavior: { 
+        lby_options: {
+          vgs_on_page: 20
+        },
+        infinite_scroll_options: {
+          enabled: true,
+        },
+      },
+      analytics: {
+        disableAll: false,
+        pagination: {
+          includeEvents: true, // Include all the aggregated events (from the previous page) in the pagination request
+          trimLingerEvents: true, // Only save the last linger event for each pagination request
+          allowedEvents: ["feed linger metrics"]
+        },
+      },
+      design: {
+        style: designSettings,
+        flags: {
+          sourcePDP: true, // If enabled, clicking on a product card will open that product link in a new tab
+        },
+        tracking: {
+          feed: {
+            enabled: true,
+            metrics: {
+              enabled: true, //  Enable the linger event aggregation
+              heatmap: false, // Overlay a duration value on each card
+              interval: 5000, // Send a metric aggregate every 5 seconds if the user is idle
+            },
+            thresholds: [0.3, 0.7], // intersection ratio thresholds for linger events: if the card is 30% visible, consider it as a linger event
+          },
+        },
+        pagination: {
+          enabled: true,
+        }
+      }
+    });
+    });
+  </script>
+</html>

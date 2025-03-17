@@ -18,6 +18,7 @@ __pycache__/
 .env.development
 .env.test
 .env.production
+venv/
 
 # IDE - VSCode
 .vscode/*
@@ -89,4 +90,4 @@ coverage/
 .eslintcache
 
 # Optional REPL history
-.node_repl_history 
+.node_repl_history
